@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { UserModel } from "../../models/users.model";
 
 export class UserItem extends Component {
-  state = {
-    id: "1",
-    login: "mojombo",
-    avatar_url: "https://avatars.githubusercontent.com/u/1?v=4",
-    html_url: "https://github.com/mojombo",
+  static propTypes = {
+    user: PropTypes.exact(UserModel).isRequired,
   };
 
   render() {
     // destructure state to directly use the prop names within
-    const { avatar_url, login, html_url } = this.state;
+    const { avatar_url, login, html_url } = this.props.user;
+
+    console.log({ props: this.props });
 
     return (
       <div className="card text-center">

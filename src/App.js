@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import "./App.css";
 import { Navbar } from "./components/layout/Navbar";
-import { UserItem } from "./components/users/UserItem";
+import { Users } from "./components/users/Users";
 
 class App extends Component {
   foo = () => "Bars";
@@ -16,7 +16,9 @@ class App extends Component {
         <h1>Hello {name.toUpperCase()}</h1>
         <h2>{this.foo()}</h2> */}
         <Navbar title="Garyd's Github Finder" />
-        <UserItem />
+        <div className="container">
+          <Users />
+        </div>
       </Fragment>
     );
   }
