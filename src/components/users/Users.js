@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { UserItem } from "./UserItem";
+import UserItem from "./UserItem";
 import { UserModel } from "../../models/users.model";
 
 export class Users extends Component {
@@ -78,10 +78,6 @@ export class Users extends Component {
     ],
   };
 
-  static propTypes = {
-    users: PropTypes.arrayOf(UserModel),
-  };
-
   render() {
     return (
       <div style={userStyle}>
@@ -92,6 +88,10 @@ export class Users extends Component {
     );
   }
 }
+
+Users.propTypes = {
+  users: PropTypes.arrayOf(UserModel),
+};
 
 const userStyle = {
   display: "grid",
