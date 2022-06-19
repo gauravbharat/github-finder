@@ -2,10 +2,8 @@ import React, { Fragment, Component } from "react";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import Users from "./components/users/Users";
-import PropTypes from "prop-types";
 
 import axios from "axios";
-import { UserModel } from "./models/users.model";
 
 class App extends Component {
   state = {
@@ -40,10 +38,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  user: PropTypes.arrayOf(UserModel),
-  loading: PropTypes.bool,
-};
 
 export default App;

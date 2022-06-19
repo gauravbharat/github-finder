@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 import UserItem from "./UserItem";
 import { UserModel } from "../../models/users.model";
+import { Spinner } from "../layout/spinner/Spinner";
 
 const Users = ({ loading, users }) => {
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div style={userStyle}>
       {users.map((user) => (
         <UserItem key={user.id} user={user} />
