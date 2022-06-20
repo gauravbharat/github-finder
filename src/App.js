@@ -12,23 +12,25 @@ class App extends Component {
     loading: false,
   };
 
-  async componentDidMount() {
+  searchUsers = async (searchText) => {
+    console.log({ searchText });
+
     this.setState({ loading: true });
 
     let response = null;
 
     try {
       response = await axios.get(
-        `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/search/users?q=${searchText}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
       );
 
-      console.log(response?.data);
-      this.setState({ users: response?.data, loading: false });
+      console.log(response);
+      this.setState({ users: response?.data?.items, loading: false });
     } catch (error) {
       console.log({ error });
       this.setState({ users: [], loading: false });
     }
-  }
+  };
 
   render() {
     const { loading, users } = this.state;
@@ -36,7 +38,7 @@ class App extends Component {
       <Fragment>
         <Navbar title="Garyd's Github Finder" />
         <div className="container">
-          <Search />
+          <Search searchUsers={this.searchUsers} />
           <Users loading={loading} users={users} />
         </div>
       </Fragment>

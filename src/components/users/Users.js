@@ -16,7 +16,7 @@ const Users = ({ loading, users }) => {
 };
 
 Users.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.exact(UserModel)),
+  users: PropTypes.arrayOf(PropTypes.shape(UserModel)),
   loading: PropTypes.bool,
 };
 
