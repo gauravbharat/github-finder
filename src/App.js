@@ -32,13 +32,19 @@ class App extends Component {
     }
   };
 
+  clearUsers = () => this.setState({ users: [] });
+
   render() {
     const { loading, users } = this.state;
     return (
       <Fragment>
         <Navbar title="Garyd's Github Finder" />
         <div className="container">
-          <Search searchUsers={this.searchUsers} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0}
+          />
           <Users loading={loading} users={users} />
         </div>
       </Fragment>
