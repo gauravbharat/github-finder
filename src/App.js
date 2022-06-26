@@ -9,6 +9,8 @@ import User from "./components/users/User";
 
 import axios from "axios";
 
+import GithubState from "./context/github/GithubState";
+
 const App = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
@@ -68,44 +70,49 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter>
-      <Fragment>
-        <Navbar title="Garyd's Github Finder" />
-        <div className="container">
-          <Alert alert={alert} />
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                <Home
-                  searchUsers={searchUsers}
-                  clearUsers={clearUsers}
-                  showClear={users.length > 0}
-                  setAlert={setAlert}
-                  loading={loading}
-                  users={users}
-                />
-              }
-            />
-            <Route exact path="/about" element={<About />} />
-            <Route
-              path="/user/:loginId"
-              element={<User loading={loading} user={user} getUser={getUser} />}
-            />
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" }}>
-                  <h1>404: Page Not Found</h1>
-                  <p>There's nothing here!</p>
-                </main>
-              }
-            />
-          </Routes>
-        </div>
-      </Fragment>
-    </BrowserRouter>
+    // Wrap App in GithubState provider for global state
+    <GithubState>
+      <BrowserRouter>
+        <Fragment>
+          <Navbar title="Garyd's Github Finder" />
+          <div className="container">
+            <Alert alert={alert} />
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <Home
+                    searchUsers={searchUsers}
+                    clearUsers={clearUsers}
+                    showClear={users.length > 0}
+                    setAlert={setAlert}
+                    loading={loading}
+                    users={users}
+                  />
+                }
+              />
+              <Route exact path="/about" element={<About />} />
+              <Route
+                path="/user/:loginId"
+                element={
+                  <User loading={loading} user={user} getUser={getUser} />
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <h1>404: Page Not Found</h1>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+            </Routes>
+          </div>
+        </Fragment>
+      </BrowserRouter>
+    </GithubState>
   );
 };
 
