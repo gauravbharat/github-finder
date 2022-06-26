@@ -17,28 +17,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlertValue] = useState(null);
 
-  const searchUsers = async (searchText) => {
-    console.log("searchUsers", { searchText });
-
-    setLoading(true);
-
-    let response = null;
-
-    try {
-      response = await axios.get(
-        `https://api.github.com/search/users?q=${searchText}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-      );
-
-      console.log(response);
-      setUsers(response?.data?.items);
-      setLoading(false);
-    } catch (error) {
-      console.log({ error });
-      setUsers([]);
-      setLoading(false);
-    }
-  };
-
   const getUser = async (username) => {
     console.log("getUser", { username });
 
@@ -83,7 +61,6 @@ const App = () => {
                 path="/"
                 element={
                   <Home
-                    searchUsers={searchUsers}
                     clearUsers={clearUsers}
                     showClear={users.length > 0}
                     setAlert={setAlert}
