@@ -4,7 +4,8 @@ import Navbar from "./components/layout/Navbar";
 import Home from "./components/pages/Home";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import User from "./components/users/User";
 
 import axios from "axios";
 
@@ -13,10 +14,11 @@ class App extends Component {
     users: [],
     loading: false,
     alert: null,
+    user: null,
   };
 
   searchUsers = async (searchText) => {
-    console.log({ searchText });
+    console.log("searchUsers", { searchText });
 
     this.setState({ loading: true });
 
@@ -35,6 +37,26 @@ class App extends Component {
     }
   };
 
+  getUser = async (username) => {
+    console.log("getUser", { username });
+
+    this.setState({ loading: true });
+
+    let response = null;
+
+    try {
+      response = await axios.get(
+        `https://api.github.com/user/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      );
+
+      console.log("getUser", { response });
+      this.setState({ user: response?.data, loading: false });
+    } catch (error) {
+      console.log("getUser", { error });
+      this.setState({ user: null, loading: false });
+    }
+  };
+
   clearUsers = () => this.setState({ users: [] });
 
   setAlert = (messageText, type) => {
@@ -44,9 +66,9 @@ class App extends Component {
   };
 
   render() {
-    const { loading, users, alert } = this.state;
+    const { loading, users, alert, user } = this.state;
     return (
-      <Router>
+      <BrowserRouter>
         <Fragment>
           <Navbar title="Garyd's Github Finder" />
           <div className="container">
@@ -67,10 +89,25 @@ class App extends Component {
                 }
               />
               <Route exact path="/about" element={<About />} />
+              <Route
+                path="/user/:loginId"
+                element={
+                  <User loading={loading} user={user} getUser={this.getUser} />
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <h1>404: Page Not Found</h1>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
             </Routes>
           </div>
         </Fragment>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
