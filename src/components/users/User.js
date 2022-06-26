@@ -1,17 +1,18 @@
 // import { useEffect } from "react";
 
-import PropTypes from "prop-types";
 import { Spinner } from "../layout/spinner/Spinner";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
-const User = ({ loading, user, getUser, repos, getUserRepos }) => {
+import GithubContext from "../../context/github/githubContext";
+
+const User = () => {
+  const githubContext = useContext(GithubContext);
+  const { getUser, loading, user } = githubContext;
   const params = useParams();
 
-  console.log({
+  console.log("User", {
     params,
-    user,
-    loading,
   });
 
   /** The Effect Hook lets you perform side effects in function components
@@ -24,21 +25,9 @@ const User = ({ loading, user, getUser, repos, getUserRepos }) => {
     //eslint-disable-next-line
   }, []);
 
-  //   if (!props.user) {
-  //     await props.getUser(username);
-  //   }
-
   if (!!loading) return <Spinner />;
 
-  return <div>User</div>;
-};
-
-User.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  user: PropTypes.object,
-  repos: PropTypes.array,
-  getUser: PropTypes.func.isRequired,
-  getUserRepos: PropTypes.func,
+  return <div>User {user?.name}</div>;
 };
 
 export default User;

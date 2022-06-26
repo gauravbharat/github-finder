@@ -1,23 +1,21 @@
-import PropTypes from "prop-types";
 import UserItem from "./UserItem";
-import { UserModel } from "../../models/users.model";
 import { Spinner } from "../layout/spinner/Spinner";
 
-const Users = ({ loading, users }) => {
-  return loading ? (
+import GithubContext from "../../context/github/githubContext";
+import { useContext } from "react";
+
+const Users = () => {
+  const githubContext = useContext(GithubContext);
+
+  return githubContext.loading ? (
     <Spinner />
   ) : (
     <div style={userStyle}>
-      {users.map((user) => (
+      {githubContext.users.map((user) => (
         <UserItem key={user.id} user={user} />
       ))}
     </div>
   );
-};
-
-Users.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape(UserModel)),
-  loading: PropTypes.bool,
 };
 
 const userStyle = {

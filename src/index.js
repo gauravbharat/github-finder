@@ -7,9 +7,9 @@ const root = ReactDOM.createRoot(document.getElementById("traversy"));
 root.render(
   // <App />
   // REACT STRICT MORE CAUSED THE COMPONENTDIDMOUNT TO RUN TWICE IN DEVELOPMENT MODE, THUS CALLING AN API TWICE
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

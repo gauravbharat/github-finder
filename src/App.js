@@ -7,39 +7,10 @@ import About from "./components/pages/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from "./components/users/User";
 
-import axios from "axios";
-
 import GithubState from "./context/github/GithubState";
 
 const App = () => {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [alert, setAlertValue] = useState(null);
-
-  const getUser = async (username) => {
-    console.log("getUser", { username });
-
-    setLoading(true);
-
-    let response = null;
-
-    try {
-      response = await axios.get(
-        `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-      );
-
-      console.log("getUser", { response });
-      setUser(response?.data);
-      setLoading(false);
-    } catch (error) {
-      console.log("getUser", { error });
-      setUser(null);
-      setLoading(false);
-    }
-  };
-
-  const clearUsers = () => setUsers([]);
 
   const setAlert = (messageText, type) => {
     setAlertValue({ messageText, type });
@@ -56,26 +27,9 @@ const App = () => {
           <div className="container">
             <Alert alert={alert} />
             <Routes>
-              <Route
-                exact
-                path="/"
-                element={
-                  <Home
-                    clearUsers={clearUsers}
-                    showClear={users.length > 0}
-                    setAlert={setAlert}
-                    loading={loading}
-                    users={users}
-                  />
-                }
-              />
+              <Route exact path="/" element={<Home setAlert={setAlert} />} />
               <Route exact path="/about" element={<About />} />
-              <Route
-                path="/user/:loginId"
-                element={
-                  <User loading={loading} user={user} getUser={getUser} />
-                }
-              />
+              <Route path="/user/:loginId" element={<User />} />
               <Route
                 path="*"
                 element={
