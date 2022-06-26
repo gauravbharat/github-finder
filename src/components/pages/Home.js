@@ -5,7 +5,7 @@ import Users from "../users/Users";
 const Home = (props) => {
   return (
     <Fragment>
-      <Search setAlert={props.setAlert} />
+      <Search />
       <Users />
     </Fragment>
   );
